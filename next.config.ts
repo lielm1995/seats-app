@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const repoName = 'seats-app'; // <-- change this to your actual repo name
+
+const config: NextConfig = {
+  output: 'export', // produce static files in /out
+  images: { unoptimized: true }, // required for static hosting
+  basePath: `/${repoName}`,
+  assetPrefix: `/${repoName}/`,
 };
 
-export default nextConfig;
+export default config;
