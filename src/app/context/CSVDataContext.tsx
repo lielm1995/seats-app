@@ -8,16 +8,20 @@ import {
   ReactNode,
 } from 'react';
 
+// Data structure: [Date, User] tuples
 interface CSVDataContextType {
-  parsedData: string[][] | null;
-  setParsedData: (data: string[][] | null) => void;
+  parsedData: Record<string, string[]> | null;
+  setParsedData: (data: Record<string, string[]> | null) => void;
   clearData: () => void;
 }
 
 const CSVDataContext = createContext<CSVDataContextType | undefined>(undefined);
 
 export function CSVDataProvider({ children }: { children: ReactNode }) {
-  const [parsedData, setParsedDataState] = useState<string[][] | null>(null);
+  const [parsedData, setParsedDataState] = useState<Record<
+    string,
+    string[]
+  > | null>(null);
 
   // Load data from localStorage on mount
   useEffect(() => {
@@ -34,7 +38,7 @@ export function CSVDataProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // Save to localStorage whenever data changes
-  const setParsedData = (data: string[][] | null) => {
+  const setParsedData = (data: Record<string, string[]> | null) => {
     setParsedDataState(data);
     if (data) {
       localStorage.setItem('parsedCSVData', JSON.stringify(data));

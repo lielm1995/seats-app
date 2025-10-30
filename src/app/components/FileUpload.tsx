@@ -2,8 +2,8 @@
 
 import { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import Papa from 'papaparse';
 import { useCSVData } from '../context/CSVDataContext';
+import { parseCSVForDateAndUser } from '../utils/csvParser';
 
 interface FileUploadProps {
   onFileUpload?: (file: File) => void;
@@ -57,20 +57,15 @@ export default function FileUpload({ onFileUpload }: FileUploadProps) {
         console.log('File size:', file.size, 'bytes');
         console.log('File type:', file.type);
 
-        // Parse CSV with papaparse
-        Papa.parse(content, {
-          skipEmptyLines: true,
-          skipFirstNLines: 1,
-          complete: (result) => {
-            console.log('Parsed result:', result);
-            console.log('Parsed data:', result.data);
-            console.log('Parse errors:', result.errors);
-            console.log('Parse meta:', result.meta);
-
-            // Store parsed data in state
-            setParsedData(result.data as string[][]);
-          },
-        });
+        // Parse CSV and extract Date/User columns
+        parseCSVForDateAndUser(content)
+          .then((usersDateMap) => {
+            setParsedData(usersDateMap);
+          })
+          .catch((error) => {
+            console.error('CSV parsing failed:', error);
+            alert(error.message);
+          });
 
         if (onFileUpload) {
           onFileUpload(file);
@@ -180,13 +175,13 @@ export default function FileUpload({ onFileUpload }: FileUploadProps) {
           <button
             onClick={handleShowData}
             disabled={!parsedData}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md transition-colors"
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer rounded-md transition-colors"
           >
             Show data
           </button>
           <button
             onClick={handleDelete}
-            className="px-4 py-2 text-sm font-medium text-red-600 bg-red-100 hover:bg-red-200 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/40 rounded-md transition-colors"
+            className="px-4 py-2 text-sm font-medium text-red-600 bg-red-100 hover:bg-red-200 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/40 cursor-pointer rounded-md transition-colors"
           >
             Remove
           </button>
