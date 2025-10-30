@@ -48,18 +48,21 @@ export function parseCSVForDateAndUser(
             return [date, user];
           });
 
-        const usersDateMap = filteredData.reduce((acc, [date, user]) => {
-          // remove "(" and ")" and any numbers from user name
-          const userName = user.replace(/[()0-9]/g, '').trim();
-          if (!acc[userName]) {
-            acc[userName] = [];
-          }
-          if (acc[userName].includes(date)) {
-            return acc;
-          }
-          acc[userName].push(date);
-          return acc;
-        }, {} as Record<string, string[]>);
+        const usersDateMap = filteredData.reduce(
+          (userDatesMap, [date, user]) => {
+            // remove "(" and ")" and any numbers from user name
+            const userName = user.replace(/[()0-9]/g, '').trim();
+            if (!userDatesMap[userName]) {
+              userDatesMap[userName] = [];
+            }
+            if (userDatesMap[userName].includes(date)) {
+              return userDatesMap;
+            }
+            userDatesMap[userName].push(date);
+            return userDatesMap;
+          },
+          {} as Record<string, string[]>
+        );
 
         resolve(usersDateMap);
       },
