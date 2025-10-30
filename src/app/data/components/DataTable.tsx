@@ -1,33 +1,36 @@
 import { SortableTableHeader } from './SortableTableHeader';
-
-type UserDataEntry = [string, string[]];
+import { TableHeader } from './TableHeader';
+import { UserDataEntry } from '../../hooks/useTableFilters';
 
 interface DataTableProps {
   entries: UserDataEntry[];
   onSort: (field: 'name' | 'count') => void;
+  showRowNumbers: boolean;
 }
 
-export function DataTable({ entries, onSort }: DataTableProps) {
+export function DataTable({ entries, onSort, showRowNumbers }: DataTableProps) {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-200">
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
+            {showRowNumbers && <TableHeader>#</TableHeader>}
             <SortableTableHeader field="name" label="Name" onSort={onSort} />
             <SortableTableHeader
               field="count"
-              label="Came to the office count"
+              label="Visits count"
               onSort={onSort}
             />
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 bg-white">
-          {entries.map(([userName, dates]) => (
+          {entries.map(([userName, visitCount], index) => (
             <tr key={userName}>
+              {showRowNumbers && (
+                <td className="px-4 py-2 text-sm text-gray-900">{index + 1}</td>
+              )}
               <td className="px-4 py-2 text-sm text-gray-900">{userName}</td>
-              <td className="px-4 py-2 text-sm text-gray-900">
-                {dates.length}
-              </td>
+              <td className="px-4 py-2 text-sm text-gray-900">{visitCount}</td>
             </tr>
           ))}
         </tbody>

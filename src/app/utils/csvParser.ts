@@ -12,8 +12,6 @@ export function parseCSVForDateAndUser(
     Papa.parse(content, {
       skipEmptyLines: true,
       complete: (result: Papa.ParseResult<string[]>) => {
-        // console.log('Parsed data:', result.data);
-
         const data = result.data as string[][];
 
         // First row contains headers: Date, Door, Device, User, Event

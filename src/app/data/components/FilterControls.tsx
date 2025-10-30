@@ -46,7 +46,6 @@ export function FilterControls({
             value={countThreshold}
             onChange={(e) => onCountThresholdChange(Number(e.target.value))}
             min="1"
-            max="30"
             className="w-20 px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         )}

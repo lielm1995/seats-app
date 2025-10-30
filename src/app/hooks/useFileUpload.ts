@@ -40,9 +40,6 @@ export function useFileUpload(
       const reader = new FileReader();
       reader.onload = (event) => {
         const content = event.target?.result as string;
-        console.log('File uploaded:', file.name);
-        console.log('File size:', file.size, 'bytes');
-        console.log('File type:', file.type);
 
         // Parse CSV and extract Date/User columns
         parseCSVForDateAndUser(content)

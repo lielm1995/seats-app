@@ -1,3 +1,5 @@
+import { TableHeader } from './TableHeader';
+
 type SortField = 'name' | 'count';
 
 interface SortableTableHeaderProps {
@@ -12,15 +14,15 @@ export function SortableTableHeader({
   onSort,
 }: SortableTableHeaderProps) {
   return (
-    <th
-      className="px-4 py-3 text-left text-sm font-medium text-gray-700 cursor-pointer hover:bg-gray-100 select-none"
+    <TableHeader
+      className="cursor-pointer hover:bg-gray-100 select-none"
       onClick={() => onSort(field)}
     >
       <div className="flex items-center gap-2">
         {label}
         <SortIcon />
       </div>
-    </th>
+    </TableHeader>
   );
 }
 
