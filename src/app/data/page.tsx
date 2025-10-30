@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useCSVData } from '../context/CSVDataContext';
 
 type SortField = 'name' | 'count';
@@ -24,7 +24,7 @@ export default function DataPage() {
     }
   };
 
-  const getFilteredAndSortedEntries = () => {
+  const filteredAndSortedEntries = useMemo(() => {
     if (!parsedData) return [];
 
     let filtered = Object.entries(parsedData);
@@ -62,7 +62,14 @@ export default function DataPage() {
         return sortOrder === 'asc' ? comparison : -comparison;
       }
     });
-  };
+  }, [
+    parsedData,
+    searchTerm,
+    filterType,
+    countThreshold,
+    sortField,
+    sortOrder,
+  ]);
 
   return (
     <div className="min-h-screen flex items-start justify-center p-8">
@@ -143,6 +150,7 @@ export default function DataPage() {
                   value={countThreshold}
                   onChange={(e) => setCountThreshold(Number(e.target.value))}
                   min="1"
+                  max="30"
                   className="w-20 px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               )}
@@ -151,9 +159,9 @@ export default function DataPage() {
         </div>
 
         {!parsedData || Object.keys(parsedData).length === 0 ? (
-          <p className="text-gray-600">No data available.</p>
-        ) : getFilteredAndSortedEntries().length === 0 ? (
-          <p className="text-gray-600">
+          <p className="text-white">No data available.</p>
+        ) : filteredAndSortedEntries.length === 0 ? (
+          <p className="text-white">
             No results match your search and filter criteria.
           </p>
         ) : (
@@ -168,25 +176,19 @@ export default function DataPage() {
                     <div className="flex items-center gap-2">
                       Name
                       <div className="flex flex-col">
-                        {sortField === 'name' ? (
-                          <span className="text-xs text-blue-600">
-                            {sortOrder === 'asc' ? '↑' : '↓'}
-                          </span>
-                        ) : (
-                          <svg
-                            className="w-3 h-3 text-gray-400"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                            />
-                          </svg>
-                        )}
+                        <svg
+                          className="w-3 h-3 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
+                          />
+                        </svg>
                       </div>
                     </div>
                   </th>
@@ -197,32 +199,26 @@ export default function DataPage() {
                     <div className="flex items-center gap-2">
                       Came to the office count
                       <div className="flex flex-col">
-                        {sortField === 'count' ? (
-                          <span className="text-xs text-blue-600">
-                            {sortOrder === 'asc' ? '↑' : '↓'}
-                          </span>
-                        ) : (
-                          <svg
-                            className="w-3 h-3 text-gray-400"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                            />
-                          </svg>
-                        )}
+                        <svg
+                          className="w-3 h-3 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
+                          />
+                        </svg>
                       </div>
                     </div>
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 bg-white">
-                {getFilteredAndSortedEntries().map(([name, dates]) => (
+                {filteredAndSortedEntries.map(([name, dates]) => (
                   <tr key={name}>
                     <td className="px-4 py-2 text-sm text-gray-900">{name}</td>
                     <td className="px-4 py-2 text-sm text-gray-900">
