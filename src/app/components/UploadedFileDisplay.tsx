@@ -1,4 +1,4 @@
-import { formatFileSize } from '../utils/fileUtils';
+import { formatFileSize, truncateFileName } from '../utils/fileUtils';
 
 interface UploadedFileDisplayProps {
   fileName: string;
@@ -33,7 +33,7 @@ export function UploadedFileDisplay({
         </svg>
         <div>
           <p className="font-medium text-green-800 dark:text-green-200">
-            {fileName}
+            {truncateFileName(fileName)}
           </p>
           <p className="text-sm text-green-600 dark:text-green-400">
             {formatFileSize(fileSize)}

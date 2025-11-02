@@ -23,3 +23,16 @@ export function isValidCSVFile(file: File): boolean {
   const fileExtension = file.name.split('.').pop()?.toLowerCase();
   return allowedTypes.includes(file.type) || fileExtension === 'csv';
 }
+
+/**
+ * Truncates a filename if it's longer than 20 characters (including extension)
+ * Shows first 10 characters + "..." + last 10 characters (which includes extension)
+ * @param fileName - Full filename including extension
+ * @returns Truncated filename if longer than 20 chars, otherwise original filename
+ */
+export function truncateFileName(fileName: string): string {
+  if (fileName.length > 26) {
+    return `${fileName.slice(0, 13)}...${fileName.slice(-13)}`;
+  }
+  return fileName;
+}

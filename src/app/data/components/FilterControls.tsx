@@ -18,7 +18,7 @@ export function FilterControls({
       <label className="block text-sm font-medium text-white mb-2">
         Filter by office visit count
       </label>
-      <div className="flex items-center space-x-6">
+      <div className="flex flex-col md:flex-row md:items-center space-y-6 md:space-y-0 md:space-x-6">
         <FilterRadioOption
           id="filter-all"
           value="all"
