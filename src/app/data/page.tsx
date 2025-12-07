@@ -11,7 +11,7 @@ import { Checkbox } from './components/Checkbox';
 
 export default function DataPage() {
   const { parsedData } = useCSVData();
-  const [showRowNumbers, setShowRowNumbers] = useState(true);
+  const [showRowNumbers, setShowRowNumbers] = useState(false);
   const {
     searchTerm,
     setSearchTerm,
@@ -31,12 +31,14 @@ export default function DataPage() {
   return (
     <div className="min-h-screen flex items-start justify-center p-8">
       <div className="w-full max-w-4xl">
-        <h1 className="text-3xl font-semibold mb-6">Data parsed page</h1>
+        <h1 className="text-3xl font-semibold mb-6 no-print">
+          Data parsed page
+        </h1>
 
         {/* Search and Filter Controls */}
-        <div className="mb-6 space-y-4">
+        <div className="mb-6 space-y-4 no-print">
           <SearchInput value={searchTerm} onChange={setSearchTerm} />
-          <div className="flex justify-between">
+          <div className="flex justify-between items-end">
             <FilterControls
               filterType={filterType}
               onFilterTypeChange={setFilterType}

@@ -28,7 +28,7 @@ export function SortableTableHeader({
 
 function SortIcon() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col no-print">
       <svg
         className="w-3 h-3 text-gray-400"
         fill="none"
