@@ -1,7 +1,7 @@
 /**
  * Formats a date string to include the day of week
  * @param dateString - Date string in format YYYY-MM-DD or similar
- * @returns Formatted string like "2024-01-15 (Monday)"
+ * @returns Formatted string like "15/01/2024 (Monday)"
  */
 export function formatDateWithDayOfWeek(dateString: string): string {
   try {
@@ -21,7 +21,12 @@ export function formatDateWithDayOfWeek(dateString: string): string {
     ];
 
     const dayOfWeek = daysOfWeek[date.getDay()];
-    const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+
+    // Format as DD/MM/YYYY
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
 
     return `${formattedDate} (${dayOfWeek})`;
   } catch (error) {
@@ -39,4 +44,3 @@ export function sortDates(dates: string[]): string[] {
     return dateA.getTime() - dateB.getTime();
   });
 }
-
