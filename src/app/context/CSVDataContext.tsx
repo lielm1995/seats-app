@@ -40,24 +40,22 @@ export function CSVDataProvider({ children }: { children: ReactNode }) {
     const storedData = localStorage.getItem('parsedCSVData');
     const storedMetadata = localStorage.getItem('csvFileMetadata');
 
-    if (storedData) {
+    // Only load if both exist, otherwise remove both
+    if (storedData && storedMetadata) {
       try {
         const data = JSON.parse(storedData);
-        setParsedDataState(data);
-      } catch (error) {
-        console.error('Failed to parse stored CSV data:', error);
-        localStorage.removeItem('parsedCSVData');
-      }
-    }
-
-    if (storedMetadata) {
-      try {
         const metadata = JSON.parse(storedMetadata);
+        setParsedDataState(data);
         setFileMetadataState(metadata);
       } catch (error) {
-        console.error('Failed to parse stored file metadata:', error);
+        console.error('Failed to parse stored CSV data or metadata:', error);
+        localStorage.removeItem('parsedCSVData');
         localStorage.removeItem('csvFileMetadata');
       }
+    } else {
+      // If one is missing, remove both to keep them in sync
+      localStorage.removeItem('parsedCSVData');
+      localStorage.removeItem('csvFileMetadata');
     }
   }, []);
 
