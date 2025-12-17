@@ -1,15 +1,27 @@
+'use client';
+
 import { SortableTableHeader } from './SortableTableHeader';
 import { TableHeader } from './TableHeader';
 import { PrintButton } from './PrintButton';
+import { DateListTooltip } from './DateListTooltip';
 import { UserDataEntry } from '../../hooks/useTableFilters';
+import { useDateTooltip } from '../../hooks/useDateTooltip';
 
 interface DataTableProps {
   entries: UserDataEntry[];
   onSort: (field: 'name' | 'count') => void;
   showRowNumbers: boolean;
+  parsedData: Record<string, string[]> | null;
 }
 
-export function DataTable({ entries, onSort, showRowNumbers }: DataTableProps) {
+export function DataTable({
+  entries,
+  onSort,
+  showRowNumbers,
+  parsedData,
+}: DataTableProps) {
+  const { tooltipState, handleCellClick } = useDateTooltip({ parsedData });
+
   return (
     <div>
       <div className="mb-4 flex justify-start no-print">
@@ -37,7 +49,11 @@ export function DataTable({ entries, onSort, showRowNumbers }: DataTableProps) {
                   </td>
                 )}
                 <td className="px-4 py-2 text-sm text-gray-900">{userName}</td>
-                <td className="px-4 py-2 text-sm text-gray-900">
+                <td
+                  data-visit-count
+                  className="px-4 py-2 text-sm text-gray-900 cursor-pointer hover:bg-gray-100 transition-colors"
+                  onClick={(e) => handleCellClick(e, userName)}
+                >
                   {visitCount}
                 </td>
               </tr>
@@ -45,6 +61,7 @@ export function DataTable({ entries, onSort, showRowNumbers }: DataTableProps) {
           </tbody>
         </table>
       </div>
+      <DateListTooltip tooltipState={tooltipState} />
     </div>
   );
 }

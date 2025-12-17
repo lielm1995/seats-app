@@ -84,6 +84,7 @@ export default function DataPage() {
             entries={processedEntries}
             onSort={handleSort}
             showRowNumbers={showRowNumbers}
+            parsedData={parsedData}
           />
         )}
       </div>

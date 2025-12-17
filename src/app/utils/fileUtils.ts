@@ -36,3 +36,37 @@ export function truncateFileName(fileName: string): string {
   }
   return fileName;
 }
+
+/**
+ * Exports dates list as a text file
+ * @param dates - Array of date strings
+ * @param userName - Name of the user
+ * @param formatDateWithDayOfWeek - Function to format dates with day of week
+ */
+export function exportDatesToFile(
+  dates: string[],
+  userName: string,
+  formatDateWithDayOfWeek: (date: string) => string
+): void {
+  const sortedDates = [...dates].sort((a, b) => {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateA.getTime() - dateB.getTime();
+  });
+
+  const content = [
+    `${userName} - ${dates.length} ${dates.length === 1 ? 'visit' : 'visits'}`,
+    '',
+    ...sortedDates.map((date) => formatDateWithDayOfWeek(date)),
+  ].join('\n');
+
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${userName.replace(/[^a-z0-9]/gi, '_')}_attendance_dates.txt`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
