@@ -31,7 +31,10 @@ export function DataTable({
   return (
     <div>
       <div className="overflow-x-auto rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200 table-fixed">
+        <table
+          id="user-visits-table"
+          className="min-w-full divide-y divide-gray-200 table-fixed"
+        >
           <colgroup>
             {showRowNumbers && <col style={{ width: '60px' }} />}
             <col /> {/* Name - takes remaining space */}
@@ -43,15 +46,20 @@ export function DataTable({
           <thead className="bg-gray-50">
             <tr>
               {showRowNumbers && <TableHeader>#</TableHeader>}
-              <SortableTableHeader field="name" label="Name" onSort={onSort} />
+              <SortableTableHeader
+                field="name"
+                label="Name"
+                onSort={(field) => onSort(field as 'name' | 'count')}
+              />
               <SortableTableHeader
                 field="count"
                 label="Visits count"
-                onSort={onSort}
+                onSort={(field) => onSort(field as 'name' | 'count')}
               />
               <TableActionsHeader
                 isMinimized={isMinimized}
                 onToggleMinimize={toggleMinimize}
+                tableId="user-visits-table"
               />
             </tr>
           </thead>

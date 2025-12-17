@@ -7,6 +7,7 @@ import { useTableFilters } from '../hooks/useTableFilters';
 import { SearchInput } from './components/SearchInput';
 import { FilterControls } from './components/FilterControls';
 import { DataTable } from './components/DataTable';
+import { DailyVisitsTable } from './components/DailyVisitsTable';
 import { EmptyState } from './components/EmptyState';
 import { Checkbox } from './components/Checkbox';
 
@@ -89,6 +90,12 @@ export default function DataPage() {
               parsedData={parsedData}
             />
           )}
+        </section>
+
+        {/* Daily Visits Section */}
+        <section className="border border-neutral-800 rounded-lg p-6 mt-6">
+          <h2 className="text-xl font-semibold mb-4">Daily Visits</h2>
+          <DailyVisitsTable parsedData={parsedData} />
         </section>
       </div>
     </div>

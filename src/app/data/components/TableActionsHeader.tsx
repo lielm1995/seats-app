@@ -1,20 +1,23 @@
 'use client';
 
 import { PrintButton } from './PrintButton';
+import { TablePrintButton } from './TablePrintButton';
 
 interface TableActionsHeaderProps {
   isMinimized: boolean;
   onToggleMinimize: () => void;
+  tableId?: string;
 }
 
 export function TableActionsHeader({
   isMinimized,
   onToggleMinimize,
+  tableId,
 }: TableActionsHeaderProps) {
   return (
     <th className="px-0 py-3 text-left no-print">
       <div className="flex items-center gap-2 justify-end pr-2">
-        <PrintButton />
+        {tableId ? <TablePrintButton tableId={tableId} /> : <PrintButton />}
         <button
           onClick={onToggleMinimize}
           className="p-1 text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded transition-colors cursor-pointer"

@@ -60,6 +60,11 @@ body {
     display: table-row-group !important;
   }
 
+  /* Hide borders when printing */
+  section {
+    border: none !important;
+  }
+
   /* Minimize body margins for print */
   body {
     margin: 0;

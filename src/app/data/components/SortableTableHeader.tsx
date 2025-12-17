@@ -1,6 +1,6 @@
 import { TableHeader } from './TableHeader';
 
-type SortField = 'name' | 'count';
+type SortField = 'name' | 'count' | 'date';
 
 interface SortableTableHeaderProps {
   field: SortField;
