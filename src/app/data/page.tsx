@@ -56,37 +56,40 @@ export default function DataPage() {
           </h1>
         </div>
 
-        {/* Search and Filter Controls */}
-        <div className="mb-6 space-y-4 no-print">
-          <SearchInput value={searchTerm} onChange={setSearchTerm} />
-          <div className="flex justify-between items-end">
-            <FilterControls
-              filterType={filterType}
-              onFilterTypeChange={setFilterType}
-              countThreshold={countThreshold}
-              onCountThresholdChange={setCountThreshold}
-            />
+        {/* Section with filters and table */}
+        <section className="border border-neutral-800 rounded-lg p-6">
+          {/* Search and Filter Controls */}
+          <div className="mb-6 space-y-4 no-print">
+            <SearchInput value={searchTerm} onChange={setSearchTerm} />
+            <div className="flex justify-between items-end">
+              <FilterControls
+                filterType={filterType}
+                onFilterTypeChange={setFilterType}
+                countThreshold={countThreshold}
+                onCountThresholdChange={setCountThreshold}
+              />
 
-            <Checkbox
-              id="show-row-numbers"
-              checked={showRowNumbers}
-              onChange={setShowRowNumbers}
-              label="Show row numbers"
-              className="self-end"
-            />
+              <Checkbox
+                id="show-row-numbers"
+                checked={showRowNumbers}
+                onChange={setShowRowNumbers}
+                label="Show row numbers"
+                className="self-end"
+              />
+            </div>
           </div>
-        </div>
 
-        {hasNoData || hasNoResults ? (
-          <EmptyState hasNoData={hasNoData} />
-        ) : (
-          <DataTable
-            entries={processedEntries}
-            onSort={handleSort}
-            showRowNumbers={showRowNumbers}
-            parsedData={parsedData}
-          />
-        )}
+          {hasNoData || hasNoResults ? (
+            <EmptyState hasNoData={hasNoData} />
+          ) : (
+            <DataTable
+              entries={processedEntries}
+              onSort={handleSort}
+              showRowNumbers={showRowNumbers}
+              parsedData={parsedData}
+            />
+          )}
+        </section>
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ export function DataTable({
 
   return (
     <div>
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
+      <div className="overflow-x-auto rounded-lg">
         <table className="min-w-full divide-y divide-gray-200 table-fixed">
           <colgroup>
             {showRowNumbers && <col style={{ width: '60px' }} />}
