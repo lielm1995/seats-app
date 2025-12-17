@@ -6,16 +6,18 @@ interface SortableTableHeaderProps {
   field: SortField;
   label: string;
   onSort: (field: SortField) => void;
+  className?: string;
 }
 
 export function SortableTableHeader({
   field,
   label,
   onSort,
+  className = '',
 }: SortableTableHeaderProps) {
   return (
     <TableHeader
-      className="cursor-pointer hover:bg-gray-100 select-none"
+      className={`cursor-pointer hover:bg-gray-100 select-none ${className}`}
       onClick={() => onSort(field)}
     >
       <div className="flex items-center gap-2">

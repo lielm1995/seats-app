@@ -55,6 +55,11 @@ body {
     display: table-footer-group;
   }
 
+  /* Force table body to be visible when printing (expand table) */
+  tbody.hidden {
+    display: table-row-group !important;
+  }
+
   /* Minimize body margins for print */
   body {
     margin: 0;
