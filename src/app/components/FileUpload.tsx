@@ -12,22 +12,22 @@ interface FileUploadProps {
 }
 
 export default function FileUpload({ onFileUpload }: FileUploadProps) {
-  const { parsedData } = useCSVData();
+  const { parsedData, fileMetadata } = useCSVData();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const { uploadedFile, isDragOver, setIsDragOver, handleFile, handleDelete } =
+  const { isDragOver, setIsDragOver, handleFile, handleDelete } =
     useFileUpload(onFileUpload);
 
   const handleDragOver = useCallback(
     (e: React.DragEvent) => {
-      if (uploadedFile) {
+      if (parsedData) {
         return;
       }
       e.preventDefault();
       setIsDragOver(true);
     },
-    [uploadedFile, setIsDragOver]
+    [parsedData, setIsDragOver]
   );
 
   const handleDragLeave = useCallback(
@@ -43,7 +43,7 @@ export default function FileUpload({ onFileUpload }: FileUploadProps) {
       e.preventDefault();
       setIsDragOver(false);
 
-      if (uploadedFile) {
+      if (parsedData) {
         return;
       }
 
@@ -52,11 +52,11 @@ export default function FileUpload({ onFileUpload }: FileUploadProps) {
         handleFile(files[0]);
       }
     },
-    [handleFile, uploadedFile, setIsDragOver]
+    [handleFile, parsedData, setIsDragOver]
   );
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (uploadedFile) {
+    if (parsedData) {
       return;
     }
 
@@ -67,7 +67,7 @@ export default function FileUpload({ onFileUpload }: FileUploadProps) {
   };
 
   const handleClick = () => {
-    if (uploadedFile) {
+    if (parsedData) {
       return;
     }
     fileInputRef.current?.click();
@@ -86,11 +86,11 @@ export default function FileUpload({ onFileUpload }: FileUploadProps) {
     }
   };
 
-  if (uploadedFile) {
+  if (parsedData && fileMetadata) {
     return (
       <UploadedFileDisplay
-        fileName={uploadedFile.name}
-        fileSize={uploadedFile.size}
+        fileName={fileMetadata.name}
+        fileSize={fileMetadata.size}
         hasParsedData={!!parsedData}
         onShowData={handleShowData}
         onDelete={handleRemove}

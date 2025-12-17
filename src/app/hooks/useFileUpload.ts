@@ -4,7 +4,6 @@ import { parseCSVForDateAndUser } from '../utils/csvParser';
 import { isValidCSVFile } from '../utils/fileUtils';
 
 interface UseFileUploadReturn {
-  uploadedFile: File | null;
   isDragOver: boolean;
   setIsDragOver: (isDragOver: boolean) => void;
   handleFile: (file: File) => void;
@@ -17,14 +16,13 @@ interface UseFileUploadReturn {
 export function useFileUpload(
   onFileUpload?: (file: File) => void
 ): UseFileUploadReturn {
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
-  const { setParsedData, clearData } = useCSVData();
+  const { parsedData, setParsedData, clearData } = useCSVData();
 
   const handleFile = useCallback(
     (file: File) => {
-      // Prevent uploading if there's already a file
-      if (uploadedFile) {
+      // Prevent uploading if there's already parsed data
+      if (parsedData) {
         return;
       }
 
@@ -34,8 +32,6 @@ export function useFileUpload(
         return;
       }
 
-      setUploadedFile(file);
-
       // Parse file with papaparse
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -44,12 +40,14 @@ export function useFileUpload(
         // Parse CSV and extract Date/User columns
         parseCSVForDateAndUser(content)
           .then((usersDateMap) => {
-            setParsedData(usersDateMap);
+            setParsedData(usersDateMap, {
+              name: file.name,
+              size: file.size,
+            });
           })
           .catch((error) => {
             console.error('CSV parsing failed:', error);
             alert(error.message);
-            setUploadedFile(null);
           });
 
         if (onFileUpload) {
@@ -58,16 +56,14 @@ export function useFileUpload(
       };
       reader.readAsText(file);
     },
-    [onFileUpload, uploadedFile, setParsedData]
+    [onFileUpload, parsedData, setParsedData]
   );
 
   const handleDelete = useCallback(() => {
-    setUploadedFile(null);
     clearData();
   }, [clearData]);
 
   return {
-    uploadedFile,
     isDragOver,
     setIsDragOver,
     handleFile,
