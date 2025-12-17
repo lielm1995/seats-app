@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useCSVData } from '../context/CSVDataContext';
 import { useTableFilters } from '../hooks/useTableFilters';
 import { SearchInput } from './components/SearchInput';
@@ -31,9 +32,29 @@ export default function DataPage() {
   return (
     <div className="min-h-screen flex items-start justify-center p-8">
       <div className="w-full max-w-4xl">
-        <h1 className="text-3xl font-semibold mb-6 no-print">
-          Data parsed page
-        </h1>
+        <div className="flex items-center gap-4 mb-6 no-print">
+          <Link
+            href="/"
+            className="text-white hover:text-gray-200 transition-colors"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={3}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </Link>
+          <h1 className="text-3xl font-semibold">
+            HoneyBook Attendance Statistics
+          </h1>
+        </div>
 
         {/* Search and Filter Controls */}
         <div className="mb-6 space-y-4 no-print">

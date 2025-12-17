@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Seats Statistics',
-  description: 'Seats statistics app',
+  title: 'HoneyBook Attendance Statistics',
+  description: 'HoneyBook Attendance Statistics',
 };
 
 export default function RootLayout({
