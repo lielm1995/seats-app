@@ -10,7 +10,7 @@ export function PrintButton({ className = '' }: PrintButtonProps) {
   return (
     <button
       onClick={handlePrint}
-      className={`p-2 text-white hover:text-gray-200 hover:bg-gray-800 rounded-md transition-colors cursor-pointer ${className}`}
+      className={`p-1 text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded transition-colors cursor-pointer ${className}`}
       title="Print table"
       aria-label="Print table"
     >
