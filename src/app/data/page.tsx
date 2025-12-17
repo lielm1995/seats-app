@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { useCSVData } from '../context/CSVDataContext';
 import { useTableFilters } from '../hooks/useTableFilters';
@@ -9,11 +8,8 @@ import { FilterControls } from './components/FilterControls';
 import { DataTable } from './components/DataTable';
 import { DailyVisitsTable } from './components/DailyVisitsTable';
 import { EmptyState } from './components/EmptyState';
-import { Checkbox } from './components/Checkbox';
-
 export default function DataPage() {
   const { parsedData } = useCSVData();
-  const [showRowNumbers, setShowRowNumbers] = useState(false);
   const {
     searchTerm,
     setSearchTerm,
@@ -62,22 +58,12 @@ export default function DataPage() {
           {/* Search and Filter Controls */}
           <div className="mb-6 space-y-4 no-print">
             <SearchInput value={searchTerm} onChange={setSearchTerm} />
-            <div className="flex justify-between items-end">
-              <FilterControls
-                filterType={filterType}
-                onFilterTypeChange={setFilterType}
-                countThreshold={countThreshold}
-                onCountThresholdChange={setCountThreshold}
-              />
-
-              <Checkbox
-                id="show-row-numbers"
-                checked={showRowNumbers}
-                onChange={setShowRowNumbers}
-                label="Show row numbers"
-                className="self-end"
-              />
-            </div>
+            <FilterControls
+              filterType={filterType}
+              onFilterTypeChange={setFilterType}
+              countThreshold={countThreshold}
+              onCountThresholdChange={setCountThreshold}
+            />
           </div>
 
           {hasNoData || hasNoResults ? (
@@ -86,7 +72,6 @@ export default function DataPage() {
             <DataTable
               entries={processedEntries}
               onSort={handleSort}
-              showRowNumbers={showRowNumbers}
               parsedData={parsedData}
             />
           )}
