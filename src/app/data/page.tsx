@@ -7,6 +7,7 @@ import { SearchInput } from './components/SearchInput';
 import { FilterControls } from './components/FilterControls';
 import { DataTable } from './components/DataTable';
 import { DailyVisitsTable } from './components/DailyVisitsTable';
+import { WeekdayAttendanceTable } from './components/WeekdayAttendanceTable';
 import { EmptyState } from './components/EmptyState';
 export default function DataPage() {
   const { parsedData } = useCSVData();
@@ -81,6 +82,14 @@ export default function DataPage() {
         <section className="border border-neutral-800 rounded-lg p-6 mt-6">
           <h2 className="text-xl font-semibold mb-4">Daily Visits</h2>
           <DailyVisitsTable parsedData={parsedData} />
+        </section>
+
+        {/* Weekday Attendance Section */}
+        <section className="border border-neutral-800 rounded-lg p-6 mt-6">
+          <h2 className="text-xl font-semibold mb-4">
+            Average Weekday Attendance
+          </h2>
+          <WeekdayAttendanceTable parsedData={parsedData} />
         </section>
       </div>
     </div>
