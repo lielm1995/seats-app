@@ -31,11 +31,15 @@ export function DailyVisitsTable({ parsedData }: DailyVisitsTableProps) {
 
   const header = () => (
     <>
-      <SortableTableHeader field="date" label="Date" onSort={handleSort} />
+      <SortableTableHeader
+        field="date"
+        label="Date"
+        onSort={(field) => handleSort(field as 'date' | 'count' | 'name')}
+      />
       <SortableTableHeader
         field="count"
         label="Visit count"
-        onSort={handleSort}
+        onSort={(field) => handleSort(field as 'date' | 'count' | 'name')}
       />
     </>
   );
