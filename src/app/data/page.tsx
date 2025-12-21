@@ -86,9 +86,6 @@ export default function DataPage() {
 
         {/* Weekday Attendance Section */}
         <section className="border border-neutral-800 rounded-lg p-6 mt-6">
-          <h2 className="text-xl font-semibold mb-4">
-            Average Weekday Attendance
-          </h2>
           <WeekdayAttendanceTable parsedData={parsedData} />
         </section>
       </div>

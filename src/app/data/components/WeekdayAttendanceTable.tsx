@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { getAverageWeekdayAttendance } from '../../utils/weekdayAttendanceUtils';
 import { SortableTableHeader } from './SortableTableHeader';
 import { SortableTable } from './SortableTable';
@@ -13,9 +13,12 @@ interface WeekdayAttendanceTableProps {
 export function WeekdayAttendanceTable({
   parsedData,
 }: WeekdayAttendanceTableProps) {
+  const [includeLowAttendanceDays, setIncludeLowAttendanceDays] =
+    useState(false);
+
   const weekdayAttendance = useMemo(
-    () => getAverageWeekdayAttendance(parsedData),
-    [parsedData]
+    () => getAverageWeekdayAttendance(parsedData, includeLowAttendanceDays),
+    [parsedData, includeLowAttendanceDays]
   );
 
   const { sortedAttendance, handleSort } = useWeekdayAttendanceSort({
@@ -53,14 +56,27 @@ export function WeekdayAttendanceTable({
     ));
 
   return (
-    <SortableTable
-      id="weekday-attendance-table"
-      colgroup={colgroup}
-      header={header}
-      rows={rows}
-      isEmpty={!parsedData || weekdayAttendance.length === 0}
-      emptyMessage="No weekday attendance data available"
-    />
+    <div>
+      <div className="flex items-center justify-between mb-4 no-print">
+        <h2 className="text-xl font-semibold">Average Weekday Attendance</h2>
+        <label className="flex items-center gap-2 text-sm text-white cursor-pointer">
+          <input
+            type="checkbox"
+            checked={includeLowAttendanceDays}
+            onChange={(e) => setIncludeLowAttendanceDays(e.target.checked)}
+            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          />
+          <span>Include outliers</span>
+        </label>
+      </div>
+      <SortableTable
+        id="weekday-attendance-table"
+        colgroup={colgroup}
+        header={header}
+        rows={rows}
+        isEmpty={!parsedData || weekdayAttendance.length === 0}
+        emptyMessage="No weekday attendance data available"
+      />
+    </div>
   );
 }
-

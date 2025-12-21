@@ -2,10 +2,12 @@
  * Processes parsed data to get average weekday attendance
  * Calculates the average number of unique visitors per weekday
  * @param parsedData - Record of userName -> dates array
+ * @param includeLowAttendanceDays - If false, excludes days with fewer than 10 people
  * @returns Array of [weekdayName, averageAttendance] tuples
  */
 export function getAverageWeekdayAttendance(
-  parsedData: Record<string, string[]> | null
+  parsedData: Record<string, string[]> | null,
+  includeLowAttendanceDays: boolean = false
 ): [string, number][] {
   if (!parsedData) return [];
 
@@ -45,10 +47,13 @@ export function getAverageWeekdayAttendance(
     const weekdayIndex = dateObj.getDay();
     const visitCount = users.size;
 
-    if (!weekdayToCounts.has(weekdayIndex)) {
-      weekdayToCounts.set(weekdayIndex, []);
+    // Include all days if includeLowAttendanceDays is true, otherwise only days with 10+ people
+    if (includeLowAttendanceDays || visitCount >= 20) {
+      if (!weekdayToCounts.has(weekdayIndex)) {
+        weekdayToCounts.set(weekdayIndex, []);
+      }
+      weekdayToCounts.get(weekdayIndex)!.push(visitCount);
     }
-    weekdayToCounts.get(weekdayIndex)!.push(visitCount);
   });
 
   // Calculate average for each weekday
