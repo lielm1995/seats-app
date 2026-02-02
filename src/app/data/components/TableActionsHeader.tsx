@@ -1,6 +1,7 @@
 'use client';
 
 import { PrintButton } from './PrintButton';
+import { TableExportButton } from './TableExportButton';
 import { TablePrintButton } from './TablePrintButton';
 
 interface TableActionsHeaderProps {
@@ -21,7 +22,14 @@ export function TableActionsHeader({
   return (
     <th className="px-0 py-3 text-left no-print">
       <div className="flex items-center gap-2 justify-end pr-2">
-        {tableId ? <TablePrintButton tableId={tableId} /> : <PrintButton />}
+        {tableId ? (
+          <>
+            <TableExportButton tableId={tableId} />
+            <TablePrintButton tableId={tableId} />
+          </>
+        ) : (
+          <PrintButton />
+        )}
         {onToggleRowNumbers && (
           <button
             onClick={onToggleRowNumbers}

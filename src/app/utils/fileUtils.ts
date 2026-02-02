@@ -46,7 +46,7 @@ export function truncateFileName(fileName: string): string {
 export function exportDatesToFile(
   dates: string[],
   userName: string,
-  formatDateWithDayOfWeek: (date: string) => string
+  formatDateWithDayOfWeek: (date: string) => string,
 ): void {
   const sortedDates = [...dates].sort((a, b) => {
     const dateA = new Date(a);
@@ -65,6 +65,67 @@ export function exportDatesToFile(
   const link = document.createElement('a');
   link.href = url;
   link.download = `${userName.replace(/[^a-z0-9]/gi, '_')}_attendance_dates.txt`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+/**
+ * Escapes a cell value for CSV (wraps in quotes if needed, escapes double quotes)
+ */
+function escapeCSVCell(value: string): string {
+  const str = String(value).trim();
+  if (/[",\n\r]/.test(str)) {
+    return `"${str.replace(/"/g, '""')}"`;
+  }
+  return str;
+}
+
+/**
+ * Exports an HTML table to CSV (Excel-compatible) and triggers download.
+ * Reads the table by id: includes header row and data rows, excludes the actions column.
+ * @param tableId - id of the table element
+ * @param filename - optional filename without extension (defaults to table id)
+ */
+export function exportTableToCSV(tableId: string, filename?: string): void {
+  const table = document.getElementById(tableId) as HTMLTableElement | null;
+  if (!table || table.tagName !== 'TABLE') return;
+
+  const thead = table.querySelector('thead tr');
+  const tbodyRows = table.querySelectorAll('tbody tr');
+  if (!thead) return;
+
+  const headerCells = thead.querySelectorAll('th');
+  // Skip last column (actions) - it has no-print or is empty
+  const headerTexts: string[] = [];
+  headerCells.forEach((th) => {
+    if (th.classList.contains('no-print')) return;
+    const text = th.textContent?.trim() ?? '';
+    if (text) headerTexts.push(text);
+  });
+
+  const rows: string[][] = [headerTexts];
+
+  tbodyRows.forEach((tr) => {
+    const cells = tr.querySelectorAll('td');
+    const row: string[] = [];
+    cells.forEach((td) => {
+      if (td.classList.contains('no-print')) return;
+      row.push(td.textContent?.trim() ?? '');
+    });
+    if (row.length > 0) rows.push(row);
+  });
+
+  const csvContent = rows
+    .map((row) => row.map(escapeCSVCell).join(','))
+    .join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${filename ?? tableId}.csv`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
