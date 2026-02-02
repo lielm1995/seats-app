@@ -33,7 +33,7 @@ export default function DataPage() {
         <div className="flex items-center gap-4 mb-6 no-print">
           <Link
             href="/"
-            className="text-white hover:text-gray-200 transition-colors"
+            className="text-foreground hover:opacity-80 transition-colors"
           >
             <svg
               className="w-5 h-5"
@@ -49,7 +49,7 @@ export default function DataPage() {
               />
             </svg>
           </Link>
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-3xl font-semibold text-foreground">
             HoneyBook Attendance Statistics
           </h1>
         </div>
@@ -80,7 +80,9 @@ export default function DataPage() {
 
         {/* Daily Visits Section */}
         <section className="border border-neutral-800 rounded-lg p-6 mt-6">
-          <h2 className="text-xl font-semibold mb-4">Daily Visits</h2>
+          <h2 className="text-xl font-semibold mb-4 text-foreground">
+            Daily Visits
+          </h2>
           <DailyVisitsTable parsedData={parsedData} />
         </section>
 

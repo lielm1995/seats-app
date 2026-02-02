@@ -15,7 +15,7 @@ export function FilterControls({
 }: FilterControlsProps) {
   return (
     <div>
-      <label className="block text-sm font-medium text-white mb-2">
+      <label className="block text-sm font-medium text-foreground mb-2">
         Filter by office visit count
       </label>
       <div className="flex flex-col md:flex-row md:items-center space-y-6 md:space-y-0 md:space-x-6">
@@ -46,7 +46,7 @@ export function FilterControls({
             value={countThreshold}
             onChange={(e) => onCountThresholdChange(Number(e.target.value))}
             min="1"
-            className="w-20 px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-20 px-2 py-1 bg-background text-foreground border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         )}
       </div>
@@ -80,7 +80,7 @@ function FilterRadioOption({
         onChange={onChange}
         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
       />
-      <label htmlFor={id} className="text-sm text-white">
+      <label htmlFor={id} className="text-sm text-foreground">
         {label}
       </label>
     </div>

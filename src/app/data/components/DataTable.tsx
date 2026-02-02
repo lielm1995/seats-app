@@ -39,10 +39,10 @@ export function DataTable({ entries, onSort, parsedData }: DataTableProps) {
   const rows = () =>
     entries.map(([userName, visitCount]) => (
       <Fragment key={userName}>
-        <td className="px-4 py-2 text-sm text-gray-900">{userName}</td>
+        <td className="px-4 py-2 text-sm text-foreground">{userName}</td>
         <td
           data-visit-count
-          className="px-4 py-2 text-sm text-gray-900 cursor-pointer hover:bg-gray-100 transition-colors"
+          className="px-4 py-2 text-sm text-foreground cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
           onClick={(e) => handleCellClick(e, userName)}
         >
           {visitCount}

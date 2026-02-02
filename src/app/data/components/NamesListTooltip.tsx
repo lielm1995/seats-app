@@ -38,16 +38,19 @@ export function NamesListTooltip({
   return (
     <div
       data-tooltip
-      className="fixed z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-4 max-h-[600px] overflow-y-auto min-w-[300px]"
+      className="fixed z-50 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg p-4 max-h-[600px] overflow-y-auto min-w-[300px]"
       style={tooltipStyle}
     >
-      <div className="font-semibold text-sm mb-2 text-gray-800">
+      <div className="font-semibold text-sm mb-2 text-foreground">
         {formatDateWithDayOfWeek(date)} - {users.length}{' '}
         {users.length === 1 ? 'visitor' : 'visitors'}
       </div>
       <div className="space-y-1">
         {users.map((user, index) => (
-          <div key={`${user}-${index}`} className="text-sm text-gray-700 py-1">
+          <div
+            key={`${user}-${index}`}
+            className="text-sm text-foreground py-1"
+          >
             {user}
           </div>
         ))}
@@ -55,4 +58,3 @@ export function NamesListTooltip({
     </div>
   );
 }
-

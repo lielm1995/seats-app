@@ -18,7 +18,7 @@ export function WeekdayAttendanceTable({
 
   const weekdayAttendance = useMemo(
     () => getAverageWeekdayAttendance(parsedData, includeLowAttendanceDays),
-    [parsedData, includeLowAttendanceDays]
+    [parsedData, includeLowAttendanceDays],
   );
 
   const { sortedAttendance, handleSort } = useWeekdayAttendanceSort({
@@ -48,8 +48,8 @@ export function WeekdayAttendanceTable({
   const rows = () =>
     sortedAttendance.map(([weekday, average]) => (
       <Fragment key={weekday}>
-        <td className="px-4 py-2 text-sm text-gray-900">{weekday}</td>
-        <td className="px-4 py-2 text-sm text-gray-900">
+        <td className="px-4 py-2 text-sm text-foreground">{weekday}</td>
+        <td className="px-4 py-2 text-sm text-foreground">
           {average.toFixed(2)}
         </td>
       </Fragment>
@@ -58,8 +58,10 @@ export function WeekdayAttendanceTable({
   return (
     <div>
       <div className="flex items-center justify-between mb-4 no-print">
-        <h2 className="text-xl font-semibold">Average Weekday Attendance</h2>
-        <label className="flex items-center gap-2 text-sm text-white cursor-pointer">
+        <h2 className="text-xl font-semibold text-foreground">
+          Average Weekday Attendance
+        </h2>
+        <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
           <input
             type="checkbox"
             checked={includeLowAttendanceDays}

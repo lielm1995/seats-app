@@ -35,7 +35,7 @@ export function TablePrintButton({
   return (
     <button
       onClick={handlePrint}
-      className={`p-1 text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded transition-colors cursor-pointer ${className}`}
+      className={`p-1 text-foreground hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors cursor-pointer ${className}`}
       title="Print this table"
       aria-label="Print this table"
     >
@@ -55,4 +55,3 @@ export function TablePrintButton({
     </button>
   );
 }
-

@@ -47,12 +47,12 @@ export function DailyVisitsTable({ parsedData }: DailyVisitsTableProps) {
   const rows = () =>
     sortedVisits.map(([date, visitCount]) => (
       <Fragment key={date}>
-        <td className="px-4 py-2 text-sm text-gray-900">
+        <td className="px-4 py-2 text-sm text-foreground">
           {formatDateWithDayOfWeek(date)}
         </td>
         <td
           data-daily-visit-count
-          className="px-4 py-2 text-sm text-gray-900 cursor-pointer hover:bg-gray-100 transition-colors"
+          className="px-4 py-2 text-sm text-foreground cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
           onClick={(e) => handleCellClick(e, date)}
         >
           {visitCount}

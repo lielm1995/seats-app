@@ -27,8 +27,8 @@ export function TableActionsHeader({
             onClick={onToggleRowNumbers}
             className={`p-1 rounded transition-colors cursor-pointer ${
               showRowNumbers
-                ? 'text-gray-900 bg-gray-200'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                ? 'text-foreground bg-gray-200 dark:bg-gray-600'
+                : 'text-foreground hover:bg-gray-200 dark:hover:bg-gray-600'
             }`}
             title={showRowNumbers ? 'Hide row numbers' : 'Show row numbers'}
             aria-label={
@@ -52,7 +52,7 @@ export function TableActionsHeader({
         )}
         <button
           onClick={onToggleMinimize}
-          className="p-1 text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded transition-colors cursor-pointer"
+          className="p-1 text-foreground hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors cursor-pointer"
           title={isMinimized ? 'Expand table' : 'Minimize table'}
           aria-label={isMinimized ? 'Expand table' : 'Minimize table'}
         >

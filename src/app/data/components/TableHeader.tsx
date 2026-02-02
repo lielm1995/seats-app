@@ -11,7 +11,7 @@ export function TableHeader({
 }: TableHeaderProps) {
   return (
     <th
-      className={`px-4 py-3 text-left text-sm font-medium text-gray-700 ${className}`}
+      className={`px-4 py-3 text-left text-sm font-medium text-foreground ${className}`}
       onClick={onClick}
     >
       {children}

@@ -33,7 +33,9 @@ export function SortableTable({
   const [showRowNumbers, setShowRowNumbers] = useState(false);
 
   if (isEmpty) {
-    return <div className="text-center py-8 text-gray-500">{emptyMessage}</div>;
+    return (
+      <div className="text-center py-8 text-foreground">{emptyMessage}</div>
+    );
   }
 
   return (
@@ -48,7 +50,7 @@ export function SortableTable({
             {colgroup()}
             <col className="no-print" style={{ width: '96px' }} />
           </colgroup>
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
               {showRowNumbers && <TableHeader>#</TableHeader>}
               {header()}
@@ -62,14 +64,14 @@ export function SortableTable({
             </tr>
           </thead>
           <tbody
-            className={`divide-y divide-gray-100 bg-white ${
+            className={`divide-y divide-gray-100 dark:divide-gray-700 bg-white dark:bg-gray-900 ${
               isMinimized ? 'hidden' : ''
             }`}
           >
             {rows().map((rowCells, index) => (
               <tr key={index}>
                 {showRowNumbers && (
-                  <td className="px-4 py-2 text-sm text-gray-900">
+                  <td className="px-4 py-2 text-sm text-foreground">
                     {index + 1}
                   </td>
                 )}

@@ -17,7 +17,7 @@ export function SortableTableHeader({
 }: SortableTableHeaderProps) {
   return (
     <TableHeader
-      className={`cursor-pointer hover:bg-gray-100 select-none ${className}`}
+      className={`cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 select-none ${className}`}
       onClick={() => onSort(field)}
     >
       <div className="flex items-center gap-2">
@@ -32,7 +32,7 @@ function SortIcon() {
   return (
     <div className="flex flex-col no-print">
       <svg
-        className="w-3 h-3 text-gray-400"
+        className="w-3 h-3 text-foreground"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"

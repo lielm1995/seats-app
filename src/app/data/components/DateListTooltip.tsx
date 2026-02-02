@@ -37,16 +37,16 @@ export function DateListTooltip({ tooltipState }: DateListTooltipProps) {
   return (
     <div
       data-tooltip
-      className="fixed z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-4 max-h-[600px] overflow-y-auto min-w-[300px]"
+      className="fixed z-50 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg p-4 max-h-[600px] overflow-y-auto min-w-[300px]"
       style={tooltipStyle}
     >
       <div className="flex justify-between items-center mb-3">
-        <div className="font-semibold text-sm text-gray-800">
+        <div className="font-semibold text-sm text-foreground">
           {userName} - {dates.length} {dates.length === 1 ? 'visit' : 'visits'}
         </div>
         <button
           onClick={handleExport}
-          className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
+          className="p-2 text-foreground hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
           title="Export to file"
           aria-label="Export to file"
         >
@@ -67,7 +67,10 @@ export function DateListTooltip({ tooltipState }: DateListTooltipProps) {
       </div>
       <div className="space-y-1">
         {sortedDates.map((date, index) => (
-          <div key={`${date}-${index}`} className="text-sm text-gray-700 py-1">
+          <div
+            key={`${date}-${index}`}
+            className="text-sm text-foreground py-1"
+          >
             {formatDateWithDayOfWeek(date)}
           </div>
         ))}
